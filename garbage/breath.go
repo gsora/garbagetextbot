@@ -104,6 +104,7 @@ var breathLetters = map[string]string{
 	"ù":  "ｕ＇",
 }
 
+// Breath takes a string and returns its breathe representation
 func Breath(s string) (r string) {
 	for _, c := range s {
 		nc := ""
