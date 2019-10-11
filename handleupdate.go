@@ -51,7 +51,7 @@ func garbageString(str string) (ret string) {
 
 	wordsVector := strings.Split(str, " ")
 	for index, substr := range wordsVector {
-		n := randomInt(0, 4)
+		n := randomInt(0, 5)
 		newWord := ""
 		switch n {
 		case 0:
@@ -62,6 +62,8 @@ func garbageString(str string) (ret string) {
 			newWord += garbage.Uwu(substr)
 		case 3:
 			newWord += garbage.Breath(substr)
+		case 4:
+			newWord += garbage.Reverse(substr)
 		}
 
 		if index+1 != len(wordsVector) {
