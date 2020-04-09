@@ -1,6 +1,6 @@
 {
   "env": {
-    "TG_BOTAPI": "@tg_botapi",
+    "TG_APIKEY": "@tg_apikey",
     "NOWSH_URL": "@nowsh_url"
   }
 }
