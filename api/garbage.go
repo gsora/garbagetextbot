@@ -1,25 +1,31 @@
 package api
 
 import (
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
-	"github.com/gsora/garbagetextbot/garbage"
+	"encoding/json"
+	"io/ioutil"
 	"log"
 	"math/rand"
 	"net/http"
 	"os"
 	"strings"
 	"time"
+
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
+	"github.com/gsora/garbagetextbot/garbage"
 )
 
 var apiKey string
 
 var url string
 
+var bot *tgbotapi.BotAPI
+
 func init() {
 	apiKey = getVariableOrFatal("TG_APIKEY")
 	url = getVariableOrFatal("NOWSH_URL")
 
-	bot, err := tgbotapi.NewBotAPI(apiKey)
+	var err error
+	bot, err = tgbotapi.NewBotAPI(apiKey)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -39,11 +45,7 @@ func init() {
 	if info.LastErrorDate != 0 {
 		log.Printf("Telegram callback failed: %s", info.LastErrorMessage)
 	}
-	updates := bot.ListenForWebhook("/api/garbage")
 
-	for u := range updates {
-		go handleUpdate(u, bot)
-	}
 }
 
 func getVariableOrFatal(varName string) string {
@@ -135,4 +137,11 @@ func randomInt(min, max int) int {
 }
 
 func Handler(w http.ResponseWriter, r *http.Request) {
+
+	bytes, _ := ioutil.ReadAll(r.Body)
+
+	var update tgbotapi.Update
+	json.Unmarshal(bytes, &update)
+
+	handleUpdate(update, bot)
 }
