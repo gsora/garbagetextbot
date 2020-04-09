@@ -1,0 +1,7 @@
+{
+  "env": {
+    "TG_BOTAPI": "@tg_botapi",
+    "NOWSH_URL": "@nowsh_url"
+  }
+}
+
