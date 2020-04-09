@@ -1,19 +1,7 @@
 package main
 
-import (
-	"log"
-	"os"
-)
+import "github.com/gsora/garbagetextbot/meme"
 
 func init() {
-	apiKey = getVariableOrFatal("TG_APIKEY")
-}
-
-func getVariableOrFatal(varName string) string {
-	v := os.Getenv(varName)
-	if v == "" {
-		log.Fatal(varName, " environment key required")
-	}
-
-	return v
+	apiKey = meme.GetVariableOrFatal("TG_APIKEY")
 }

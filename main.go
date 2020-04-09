@@ -4,6 +4,8 @@ import (
 	"log"
 	"strings"
 
+	"github.com/gsora/garbagetextbot/meme"
+
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
@@ -44,7 +46,7 @@ func main() {
 	updates, err := bot.GetUpdatesChan(u)
 
 	for update := range updates {
-		go handleUpdate(update, bot)
+		go meme.HandleUpdate(update, bot)
 	}
 
 }

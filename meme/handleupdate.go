@@ -1,8 +1,9 @@
-package main
+package meme
 
 import (
 	"log"
 	"math/rand"
+	"os"
 	"strings"
 	"time"
 
@@ -10,7 +11,7 @@ import (
 	"github.com/gsora/garbagetextbot/garbage"
 )
 
-func handleUpdate(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
+func HandleUpdate(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	if update.InlineQuery != nil {
 		log.Printf("[INLINE] new query sent in by %s -> %s\n", update.InlineQuery.From.UserName, update.InlineQuery.Query)
 		payload := []interface{}{}
@@ -87,4 +88,13 @@ func letterGarbageString(str string) (ret string) {
 // Returns an int >= min, < max
 func randomInt(min, max int) int {
 	return min + rand.Intn(max-min)
+}
+
+func GetVariableOrFatal(varName string) string {
+	v := os.Getenv(varName)
+	if v == "" {
+		log.Fatal(varName, " environment key required")
+	}
+
+	return v
 }
